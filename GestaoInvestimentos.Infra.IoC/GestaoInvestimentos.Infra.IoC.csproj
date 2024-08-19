@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GestaoInvestimentos.Application\GestaoInvestimentos.Application.csproj" />
     <ProjectReference Include="..\GestaoInvestimentos.Infra.Data\GestaoInvestimentos.Infra.Data.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using GestaoInvestimentos.Application.Interfaces;
+﻿using GestaoInvestimentos.Application.DTOs.Usuario.Request;
+using GestaoInvestimentos.Application.Interfaces;
 using GestaoInvestimentos.Domain.Entitites;
 using GestaoInvestimentos.Infra.Data.Interfaces;
 
@@ -13,7 +14,7 @@ namespace GestaoInvestimentos.Application.Services
             _usuarioRepository = usuarioRepository;
         }
 
-        public async Task CadastrarUsuario(Usuario usuario)
+        public async Task CadastrarUsuario(UsuarioRequest usuario)
         {
             var usuarioExistente = await _usuarioRepository.BuscarUsuarioPorEmail(usuario.Email);
 

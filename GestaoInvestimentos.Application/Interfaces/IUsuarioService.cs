@@ -1,9 +1,10 @@
-﻿using GestaoInvestimentos.Domain.Entitites;
+﻿using GestaoInvestimentos.Application.DTOs.Usuario.Request;
+using GestaoInvestimentos.Domain.Entitites;
 
 namespace GestaoInvestimentos.Application.Interfaces
 {
     public interface IUsuarioService
     {
-        Task CadastrarUsuario(Usuario usuario);
-    }
+        Task CadastrarUsuario(UsuarioRequest usuario);
+    } 
 }
