@@ -2,7 +2,7 @@
 
 namespace GestaoInvestimentos.Domain.Entitites
 {
-    public class Transacao : Base
+    public class Transacao : EntityBase
     {
         public int PortfolioId { get; set; }
         public int AtivoId { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace GestaoInvestimentos.Domain.Entitites
 {
-    public class Portfolio: Base
+    public class Portfolio: EntityBase
     {
         public int UsuarioId { get; set; }
         public string Nome { get; set; }
