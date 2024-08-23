@@ -13,6 +13,7 @@ namespace GestaoInvestimentos.Infra.IoC
         {
             services.AddScoped<IMongoContext, MongoContext>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IJwtToken, JwtToken>();
         }
 
         public static void ConfigureService(IServiceCollection services)

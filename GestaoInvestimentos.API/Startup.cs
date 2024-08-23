@@ -1,8 +1,10 @@
-﻿using GestaoInvestimentos.Infra.Data.Configuration;
+﻿using GestaoInvestimentos.Domain.Entitites;
+using GestaoInvestimentos.Infra.Data.Configuration;
 using GestaoInvestimentos.Infra.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 
 namespace GestaoInvestimentos.API
@@ -20,60 +22,70 @@ namespace GestaoInvestimentos.API
         {
             services.AddControllers();
 
-            services.AddAuthentication(options =>
+            var configuration = new ConfigurationBuilder()
+              .AddJsonFile("appsettings.Development.json")
+              .Build();
+
+            services.AddAuthentication(x =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("s3cR3tK3yW1thSp3c1@lCh@r@cter$123!"))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration.GetSection("AppSettings").GetValue<string>("Secret"))),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
                 };
             });
+
 
             services.AddAuthorization();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "APITechChallenge", Version = "v1" });
-
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FiapTechChallenge", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
                     Name = "Authorization",
+                    In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "JWT Authorization header using the Bearer scheme.Bearer [space] and then your token in the text input below. Example: Bearer 12345abcdef",
+                    BearerFormat = "JWT"
                 });
+
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
-                          new OpenApiSecurityScheme
-                          {
-                              Reference = new OpenApiReference
-                              {
-                                  Type = ReferenceType.SecurityScheme,
-                                  Id = "Bearer"
-                              }
-                          },
-                         new string[] {}
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id= "Bearer"
+                            }
+                        },
+                    Array.Empty<string>()
                     }
                 });
+
+                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                //c.IncludeXmlComments(xmlPath);
             });
 
 
             services.Configure<MongoConfiguration>(
               Configuration.GetSection("MongoSettings"));
 
-            //services.Configure<AppSettings>(
-            //    Configuration.GetSection("AppSettings"));
-
+            services.Configure<AppSettings>(
+                Configuration.GetSection("AppSettings"));
 
 
             IoCConfiguration.ConfigureRepository(services);

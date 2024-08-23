@@ -17,6 +17,24 @@ namespace GestaoInvestimentos.API.Controllers
         }
 
         [HttpPost]
+        [Route("autenticar")]
+        public async Task<IActionResult> CadastrarUsuario([FromBody] AutenticarUsuarioRequest autenticarUsuario)
+        {
+            try
+            {
+                var usuario = await _usuarioService.AutenticarUsuario(autenticarUsuario.Email, autenticarUsuario.Senha);
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+
+        [HttpPost]
         [Route("cadastrar")]
         public async Task<IActionResult> CadastrarUsuario([FromBody] UsuarioRequest usuario)
         {

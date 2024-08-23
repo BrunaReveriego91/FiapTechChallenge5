@@ -14,6 +14,33 @@ namespace GestaoInvestimentos.Infra.Data.Repositories
             _context = context;
         }
 
+        public async Task<Usuario> AutenticarUsuario(string email, string senha)
+        {
+            try
+            {
+                var usuario = await _context.Usuarios.Find(u => u.Email == email).FirstOrDefaultAsync();
+
+                if (usuario == null)
+                {
+                    throw new Exception("Usuário ou senha inválidos.");
+                }
+
+                bool senhaValida = BCrypt.Net.BCrypt.Verify(senha, usuario.Senha);
+
+                if (!senhaValida)
+                {
+                    throw new Exception("Usuário ou senha inválidos.");
+                }
+
+                usuario.Senha = null;
+                return usuario;
+            }
+            catch (MongoException ex)
+            {
+                throw new MongoException(ex.Message);
+            }
+        }
+
         public async Task<Usuario> BuscarUsuarioPorEmail(string email)
         {
             try
