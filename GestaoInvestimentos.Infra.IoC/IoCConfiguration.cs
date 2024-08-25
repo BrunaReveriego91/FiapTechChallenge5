@@ -13,12 +13,14 @@ namespace GestaoInvestimentos.Infra.IoC
         {
             services.AddScoped<IMongoContext, MongoContext>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IAtivoRepository, AtivoRepository>();
             services.AddScoped<IJwtToken, JwtToken>();
         }
 
         public static void ConfigureService(IServiceCollection services)
         {
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IAtivoService, AtivoService>();
         }
 
         public static void ConfigureAutoMapper(IServiceCollection services)
