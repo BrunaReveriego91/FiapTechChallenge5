@@ -39,6 +39,25 @@ namespace GestaoInvestimentos.Tests.UnitTests
         }
 
         [Fact]
+        public async Task AutenticarUsuario_DeveLancarException()
+        {
+            //Arrange
+            var service = CriarService();
+            var usuarioFaker = new UsuarioFaker().Generate();
+
+            _repositoryMock.Setup(x => x.AutenticarUsuario(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync((Usuario)null);
+
+            //Act & Assert
+            await Assert.ThrowsAsync<Exception>(async () =>
+            {
+                await service.AutenticarUsuario(It.IsAny<string>(), It.IsAny<string>());
+            });
+
+        }
+
+
+        [Fact]
         public async Task CadastrarUsuario_DeveRetornarSucesso()
         {
             //Arrange

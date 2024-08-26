@@ -21,7 +21,7 @@ namespace GestaoInvestimentos.Application.Services
             var usuario = await _usuarioRepository.AutenticarUsuario(email, senha);
 
             if (usuario == null)
-                return null;
+                throw new Exception("Falha ao autenticar usuário.");
 
             return await _jwtToken.GenerateToken(usuario);
         }
