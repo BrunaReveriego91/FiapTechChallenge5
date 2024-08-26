@@ -19,6 +19,26 @@ namespace GestaoInvestimentos.Tests.UnitTests
         }
 
         [Fact]
+        public async Task AutenticarUsuario_DeveRetornarSucesso()
+        {
+            //Arrange
+            var service = CriarService();
+            var usuarioFaker = new UsuarioFaker().Generate();
+
+            string jwtMock = $"eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcyNDY4MjYwMCwiaWF0IjoxNzI0NjgyNjAwfQ.DGghqaE0FUAsxSemapNMFjQi4cslLWGUXxANVeE0zQE";
+
+            _repositoryMock.Setup(x => x.AutenticarUsuario(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(usuarioFaker);
+            _jwtMock.Setup(x => x.GenerateToken(usuarioFaker)).ReturnsAsync(jwtMock);
+            //Act
+            var response = await service.AutenticarUsuario(It.IsAny<string>(), It.IsAny<string>());
+
+            //Assert
+            Assert.NotNull(response);
+
+        }
+
+        [Fact]
         public async Task CadastrarUsuario_DeveRetornarSucesso()
         {
             //Arrange

@@ -1,5 +1,6 @@
 ﻿using GestaoInvestimentos.Application.Interfaces;
 using GestaoInvestimentos.Domain.Entitites;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoInvestimentos.API.Controllers
@@ -17,6 +18,7 @@ namespace GestaoInvestimentos.API.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [Route("cadastrar")]
         public async Task<IActionResult> CadastrarAtivo([FromBody] Ativo ativo)
         {
@@ -33,6 +35,7 @@ namespace GestaoInvestimentos.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("listar")]
         public async Task<IActionResult> ListarAtivos()
         {

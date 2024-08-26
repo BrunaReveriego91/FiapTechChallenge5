@@ -1,6 +1,6 @@
 ﻿using GestaoInvestimentos.Application.DTOs.Usuario.Request;
 using GestaoInvestimentos.Application.Interfaces;
-using GestaoInvestimentos.Domain.Entitites;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoInvestimentos.API.Controllers
@@ -17,8 +17,9 @@ namespace GestaoInvestimentos.API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("autenticar")]
-        public async Task<IActionResult> CadastrarUsuario([FromBody] AutenticarUsuarioRequest autenticarUsuario)
+        public async Task<IActionResult> AutenticarUsuario([FromBody] AutenticarUsuarioRequest autenticarUsuario)
         {
             try
             {
@@ -35,6 +36,7 @@ namespace GestaoInvestimentos.API.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("cadastrar")]
         public async Task<IActionResult> CadastrarUsuario([FromBody] UsuarioRequest usuario)
         {
