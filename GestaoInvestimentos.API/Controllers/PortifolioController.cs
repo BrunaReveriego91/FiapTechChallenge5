@@ -7,24 +7,24 @@ namespace GestaoInvestimentos.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AtivoController : ControllerBase
+    public class PortifolioController : ControllerBase
     {
-        private readonly IAtivoService _ativoService;
+        private readonly IPortifolioService _portifolioService;
 
-        public AtivoController(IAtivoService ativoService)
+        public PortifolioController(IPortifolioService portifolioService)
         {
-            _ativoService = ativoService;
+            _portifolioService = portifolioService;
         }
 
 
         [HttpPost]
         [Authorize]
         [Route("cadastrar")]
-        public async Task<IActionResult> CadastrarAtivo([FromBody] Ativo ativo)
+        public async Task<IActionResult> CadastrarPortifolio([FromBody] Portifolio portifolio)
         {
             try
             {
-                await _ativoService.CadastrarAtivo(ativo);
+                await _portifolioService.CadastrarPortifolio(portifolio);
                 return Ok();
             }
             catch (Exception ex)
@@ -37,12 +37,12 @@ namespace GestaoInvestimentos.API.Controllers
         [HttpGet]
         [Authorize]
         [Route("listar")]
-        public async Task<IActionResult> ListarAtivos()
+        public async Task<IActionResult> ListarPortifolios()
         {
             try
             {
-                var ativos = await _ativoService.ListarAtivos();
-                return Ok(ativos);
+                var portifolios = await _portifolioService.ListarPortifolios();
+                return Ok(portifolios);
             }
             catch (Exception ex)
             {
@@ -52,12 +52,12 @@ namespace GestaoInvestimentos.API.Controllers
         [HttpGet]
         [Authorize]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> BuscarAtivo(Guid id)
+        public async Task<IActionResult> BuscarPortifolio(Guid id)
         {
             try
             {
-                var ativos = await _ativoService.BuscarAtivo(id);
-                return Ok(ativos);
+                var portifolios = await _portifolioService.BuscarPortifolio(id);
+                return Ok(portifolios);
             }
             catch (Exception ex)
             {
@@ -67,11 +67,11 @@ namespace GestaoInvestimentos.API.Controllers
         [HttpDelete]
         [Authorize]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> RemoverAtivo(Guid id)
+        public async Task<IActionResult> RemoverPortifolio(Guid id)
         {
             try
             {
-                await _ativoService.RemoverAtivo(id);
+                await _portifolioService.RemoverPortifolio(id);
                 return Ok();
             }
             catch (Exception ex)

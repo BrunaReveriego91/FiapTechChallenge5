@@ -22,5 +22,25 @@ namespace GestaoInvestimentos.Application.Services
         {
             await _ativoRepository.CadastrarAtivo(ativo);
         }
+
+        public async Task AlterarAtivo(Ativo ativo)
+        {
+            await _ativoRepository.AlterarAtivo(ativo);
+        }
+
+        public async Task RemoverAtivo(Guid id)
+        {
+            var ativoExistente = await _ativoRepository.BuscarAtivo(id);
+
+            if (ativoExistente == null)
+                throw new Exception("Cadastro ativo não localizado.");
+
+            await _ativoRepository.RemoverAtivo(id);
+        }
+
+        public async Task<Ativo> BuscarAtivo(Guid id)
+        {
+            return await _ativoRepository.BuscarAtivo(id);
+        }
     }
 }
