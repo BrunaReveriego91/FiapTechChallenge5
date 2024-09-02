@@ -1,24 +1,32 @@
-trigger:
-  branches:
-    include:
+name: .NET Core
+
+on:
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches: 
       - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+jobs:
+  build:
 
-steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '6.x' 
-    installationPath: $(Agent.ToolsDirectory)/dotnet
+    runs-on: ubuntu-latest
 
-- script: dotnet restore
-  displayName: 'Restore dependencies'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-- script: dotnet build --configuration Release
-  displayName: 'Build solution'
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.x'
 
-- script: dotnet test --configuration Release --no-build --collect:"XPlat Code Coverage"
-  displayName: 'Run tests'
-  continueOnError: true
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test --configuration Release --no-build --collect:"XPlat Code Coverage"
