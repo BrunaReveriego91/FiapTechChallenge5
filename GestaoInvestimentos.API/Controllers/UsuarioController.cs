@@ -1,6 +1,5 @@
 ﻿using GestaoInvestimentos.Application.DTOs.Usuario.Request;
 using GestaoInvestimentos.Application.Interfaces;
-using GestaoInvestimentos.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,7 +51,7 @@ namespace GestaoInvestimentos.API.Controllers
 
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("listar")]
         public async Task<IActionResult> ListarUsuarios()
         {
@@ -66,5 +65,22 @@ namespace GestaoInvestimentos.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete]
+        [Authorize(Roles = "Admin")]
+        [Route("remover/{Id}")]
+        public async Task<IActionResult> RemoverUsuarioPorId(Guid id)
+        {
+            try
+            {
+                await _usuarioService.RemoverUsuarioPorId(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

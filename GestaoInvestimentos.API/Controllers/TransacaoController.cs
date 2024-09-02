@@ -65,7 +65,7 @@ namespace GestaoInvestimentos.API.Controllers
             }
         }
         [HttpDelete]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("{id:Guid}")]
         public async Task<IActionResult> RemoverTransacao(Guid id)
         {

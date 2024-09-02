@@ -93,5 +93,17 @@ namespace GestaoInvestimentos.Infra.Data.Repositories
                 throw new MongoException(ex.Message);
             }
         }
+
+        public async Task RemoverUsuarioPorId(Guid id)
+        {
+            try
+            {
+                await _context.Usuarios.FindOneAndDeleteAsync(e => e.Id == id);
+            }
+            catch (MongoException ex)
+            {
+                throw new MongoException(ex.Message);
+            }
+        }
     }
 }

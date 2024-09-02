@@ -2,7 +2,6 @@
 using GestaoInvestimentos.Application.Interfaces;
 using GestaoInvestimentos.Domain.Entitites;
 using GestaoInvestimentos.Infra.Data.Interfaces;
-using GestaoInvestimentos.Infra.Data.Repositories;
 
 namespace GestaoInvestimentos.Application.Services
 {
@@ -54,6 +53,17 @@ namespace GestaoInvestimentos.Application.Services
         public async Task<IEnumerable<Usuario>> ListarUsuario()
         {
             return await _usuarioRepository.ListarUsuarios();
+        }
+
+        public async Task RemoverUsuarioPorId(Guid id)
+        {
+            var usuarioExistente = await _usuarioRepository.BuscarUsuarioPorId(id);
+
+            if (usuarioExistente == null)
+                throw new Exception("Não foi possível excluir o usuário,usuário não localizado!");
+
+            await _usuarioRepository.RemoverUsuarioPorId(id);
+
         }
     }
 }

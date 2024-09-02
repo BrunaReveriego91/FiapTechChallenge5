@@ -23,8 +23,9 @@ namespace GestaoInvestimentos.Infra.Data.Repositories
             var key = Encoding.ASCII.GetBytes(_settings.Secret);
             List<Claim> claims = new()
             {
-                new Claim("Nome", usuario.Nome.ToString()),
-                new Claim(ClaimTypes.Role, "ADMIN")
+                new Claim(ClaimTypes.Name, usuario.Nome),
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                new Claim(ClaimTypes.Role, usuario.Role.ToString())
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -35,7 +36,7 @@ namespace GestaoInvestimentos.Infra.Data.Repositories
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString =  tokenHandler.WriteToken(token);
+            var tokenString = tokenHandler.WriteToken(token);
 
             return await Task.FromResult(tokenString);
         }

@@ -18,7 +18,7 @@ namespace GestaoInvestimentos.API.Controllers
 
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("cadastrar")]
         public async Task<IActionResult> CadastrarPortifolio([FromBody] Portifolio portifolio)
         {
@@ -65,7 +65,7 @@ namespace GestaoInvestimentos.API.Controllers
             }
         }
         [HttpDelete]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("{id:Guid}")]
         public async Task<IActionResult> RemoverPortifolio(Guid id)
         {

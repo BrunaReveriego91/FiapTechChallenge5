@@ -9,5 +9,6 @@ namespace GestaoInvestimentos.Application.Interfaces
         Task CadastrarUsuario(UsuarioRequest usuario);
         Task<Usuario> BuscarUsuario(Guid id);
         Task<IEnumerable<Usuario>> ListarUsuario();
-    } 
+        Task RemoverUsuarioPorId(Guid id);
+    }
 }
