@@ -1,5 +1,6 @@
 ﻿using GestaoInvestimentos.Application.DTOs.Usuario.Request;
 using GestaoInvestimentos.Application.Interfaces;
+using GestaoInvestimentos.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,8 +34,6 @@ namespace GestaoInvestimentos.API.Controllers
 
         }
 
-
-
         [HttpPost]
         [AllowAnonymous]
         [Route("cadastrar")]
@@ -49,7 +48,23 @@ namespace GestaoInvestimentos.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
 
+
+        [HttpGet]
+        [Authorize]
+        [Route("listar")]
+        public async Task<IActionResult> ListarUsuarios()
+        {
+            try
+            {
+                var usuarios = await _usuarioService.ListarUsuario();
+                return Ok(usuarios);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

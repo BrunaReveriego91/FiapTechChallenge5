@@ -11,10 +11,12 @@ namespace GestaoInvestimentos.Tests.UnitTests
     public class TransacaoServiceTests
     {
         private readonly Mock<ITransacaoRepository> _transacaoRepository = new();
+        private readonly Mock<IAtivoService> _ativoService = new();
+        private readonly Mock<IPortifolioService> _portifolioService = new();
 
         private ITransacaoService CriarServico()
         {
-            return new TransacaoService(_transacaoRepository.Object);
+            return new TransacaoService(_transacaoRepository.Object, _ativoService.Object, _portifolioService.Object);
         }
 
         [Fact]

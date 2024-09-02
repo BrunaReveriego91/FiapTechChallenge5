@@ -7,5 +7,7 @@ namespace GestaoInvestimentos.Application.Interfaces
     {
         Task<string> AutenticarUsuario(string email, string senha);
         Task CadastrarUsuario(UsuarioRequest usuario);
+        Task<Usuario> BuscarUsuario(Guid id);
+        Task<IEnumerable<Usuario>> ListarUsuario();
     } 
 }

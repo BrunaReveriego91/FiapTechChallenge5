@@ -7,10 +7,12 @@ namespace GestaoInvestimentos.Application.Services
     public class PortifolioService : IPortifolioService
     {
         private readonly IPortifolioRepository _portifolioRepository;
+        private readonly IUsuarioService _usuarioService;
 
-        public PortifolioService(IPortifolioRepository portifolioRepository)
+        public PortifolioService(IPortifolioRepository portifolioRepository, IUsuarioService usuarioService)
         {
             _portifolioRepository = portifolioRepository;
+            _usuarioService = usuarioService;
         }
 
         public async Task<IEnumerable<Portifolio>> ListarPortifolios()
@@ -20,6 +22,11 @@ namespace GestaoInvestimentos.Application.Services
 
         public async Task CadastrarPortifolio(Portifolio portifolio)
         {
+            var usuario = await _usuarioService.BuscarUsuario(portifolio.UsuarioId);
+
+            if (usuario == null)
+                throw new Exception("Não foi possível realizar o cadastro do portifólio, usuário não localizado.");
+
             await _portifolioRepository.CadastrarPortifolio(portifolio);
         }
 

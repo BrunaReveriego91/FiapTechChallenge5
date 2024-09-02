@@ -2,6 +2,7 @@
 using GestaoInvestimentos.Application.Interfaces;
 using GestaoInvestimentos.Domain.Entitites;
 using GestaoInvestimentos.Infra.Data.Interfaces;
+using GestaoInvestimentos.Infra.Data.Repositories;
 
 namespace GestaoInvestimentos.Application.Services
 {
@@ -26,6 +27,11 @@ namespace GestaoInvestimentos.Application.Services
             return await _jwtToken.GenerateToken(usuario);
         }
 
+        public async Task<Usuario> BuscarUsuario(Guid id)
+        {
+            return await _usuarioRepository.BuscarUsuarioPorId(id);
+        }
+
         public async Task CadastrarUsuario(UsuarioRequest usuario)
         {
             var usuarioExistente = await _usuarioRepository.BuscarUsuarioPorEmail(usuario.Email);
@@ -43,6 +49,11 @@ namespace GestaoInvestimentos.Application.Services
             };
 
             await _usuarioRepository.CadastrarUsuario(usuarioHash);
+        }
+
+        public async Task<IEnumerable<Usuario>> ListarUsuario()
+        {
+            return await _usuarioRepository.ListarUsuarios();
         }
     }
 }
