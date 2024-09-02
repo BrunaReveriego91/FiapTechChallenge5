@@ -59,11 +59,21 @@ namespace GestaoInvestimentos.Tests.UnitTests
         public async Task CadastrarTransacao_DeveCadastrarComSucesso()
         {
             //Arrange
-            _transacaoRepository.Setup(x => x.CadastrarTransacao(It.IsAny<Transacao>()));
+            var ativoFaker = new AtivoFaker().Generate();
+            var portfolioFaker = new PortfolioFaker().Generate();
+            var transacaoFaker = new TransacaoFaker().Generate();
+
+            _ativoService.Setup(x => x.BuscarAtivo(transacaoFaker.AtivoId))
+                .ReturnsAsync(ativoFaker);
+
+            _portifolioService.Setup(x => x.BuscarPortifolio(transacaoFaker.PortfolioId))
+                .ReturnsAsync(portfolioFaker);
+
+            _transacaoRepository.Setup(x => x.CadastrarTransacao(transacaoFaker));
 
             var service = CriarServico();
             //Act
-            await service.CadastrarTransacao(It.IsAny<Transacao>());
+            await service.CadastrarTransacao(transacaoFaker);
 
             //Assert
             Mock.Get(_transacaoRepository.Object).Verify(x => x.CadastrarTransacao(It.IsAny<Transacao>()), Times.Exactly(1));
@@ -76,15 +86,24 @@ namespace GestaoInvestimentos.Tests.UnitTests
             //Arrange
 
             var exception = new MongoException("Exceção forçada.");
+            var ativoFaker = new AtivoFaker().Generate();
+            var portfolioFaker = new PortfolioFaker().Generate();
+            var transacaoFaker = new TransacaoFaker().Generate();
 
-            _transacaoRepository.Setup(x => x.CadastrarTransacao(It.IsAny<Transacao>()))
+            _ativoService.Setup(x => x.BuscarAtivo(transacaoFaker.AtivoId))
+                .ReturnsAsync(ativoFaker);
+
+            _portifolioService.Setup(x => x.BuscarPortifolio(transacaoFaker.PortfolioId))
+                .ReturnsAsync(portfolioFaker);
+
+            _transacaoRepository.Setup(x => x.CadastrarTransacao(transacaoFaker))
                 .ThrowsAsync(exception);
 
             var service = CriarServico();
             //Act && Assert
             await Assert.ThrowsAsync<MongoException>(async () =>
             {
-                await service.CadastrarTransacao(It.IsAny<Transacao>());
+                await service.CadastrarTransacao(transacaoFaker);
             });
         }
 
