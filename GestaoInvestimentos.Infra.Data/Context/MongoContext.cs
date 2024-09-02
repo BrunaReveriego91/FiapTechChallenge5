@@ -16,7 +16,9 @@ namespace GestaoInvestimentos.Infra.Data.Context
             _db = client.GetDatabase(config.Value.Database);
 
             CriaCollectionSeNaoExistir<Usuario>("Usuarios").Wait();
-            CriaCollectionSeNaoExistir<Usuario>("Ativos").Wait();
+            CriaCollectionSeNaoExistir<Ativo>("Ativos").Wait();
+            CriaCollectionSeNaoExistir<Portifolio>("Portifolios").Wait();
+            CriaCollectionSeNaoExistir<Transacao>("Transacoes").Wait();
 
         }
 
@@ -35,5 +37,7 @@ namespace GestaoInvestimentos.Infra.Data.Context
         public IMongoCollection<Usuario> Usuarios => _db.GetCollection<Usuario>("Usuarios");
 
         public IMongoCollection<Ativo> Ativos => _db.GetCollection<Ativo>("Ativos");
+        public IMongoCollection<Portifolio> Portifolios => _db.GetCollection<Portifolio>("Portifolios");
+        public IMongoCollection<Transacao> Transacoes => _db.GetCollection<Transacao>("Transacoes");
     }
 }

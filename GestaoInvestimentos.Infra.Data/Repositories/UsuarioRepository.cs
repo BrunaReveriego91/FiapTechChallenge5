@@ -53,6 +53,18 @@ namespace GestaoInvestimentos.Infra.Data.Repositories
             }
         }
 
+        public async Task<Usuario> BuscarUsuarioPorId(Guid id)
+        {
+            try
+            {
+                return await _context.Usuarios.Find(u => u.Id == id).FirstOrDefaultAsync();
+            }
+            catch (MongoException ex)
+            {
+                throw new MongoException(ex.Message);
+            }
+        }
+
         public async Task CadastrarUsuario(Usuario usuario)
         {
             try
@@ -68,6 +80,18 @@ namespace GestaoInvestimentos.Infra.Data.Repositories
         public Task DesabilitarUsuario(int idUsuario)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Usuario>> ListarUsuarios()
+        {
+            try
+            {
+                return await _context.Usuarios.Find(e => true).ToListAsync();
+            }
+            catch (MongoException ex)
+            {
+                throw new MongoException(ex.Message);
+            }
         }
     }
 }

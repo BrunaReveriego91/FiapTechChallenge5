@@ -1,11 +1,14 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace GestaoInvestimentos.Domain.Entitites
 {
     public class EntityBase
     {
         [BsonId]
-        public ObjectId Id { get; set; } = ObjectId.GenerateNewId();
+        public Guid Id { get; set; }
+        public EntityBase()
+        {
+            Id = new Guid();
+        }
     }
 }

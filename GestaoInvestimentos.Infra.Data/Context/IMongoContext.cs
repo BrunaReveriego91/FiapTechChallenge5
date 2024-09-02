@@ -7,6 +7,9 @@ namespace GestaoInvestimentos.Infra.Data.Context
     {
         IMongoCollection<Usuario> Usuarios { get; }
         IMongoCollection<Ativo> Ativos { get; }
+        IMongoCollection<Portifolio> Portifolios { get; }
+        IMongoCollection<Transacao> Transacoes { get; }
 
     }
 }
+

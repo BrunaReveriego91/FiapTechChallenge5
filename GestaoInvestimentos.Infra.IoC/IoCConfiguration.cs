@@ -14,6 +14,8 @@ namespace GestaoInvestimentos.Infra.IoC
             services.AddScoped<IMongoContext, MongoContext>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IAtivoRepository, AtivoRepository>();
+            services.AddScoped<IPortifolioRepository, PortifolioRepository>();
+            services.AddScoped<ITransacaoRepository, TransacaoRepository>();
             services.AddScoped<IJwtToken, JwtToken>();
         }
 
@@ -21,6 +23,8 @@ namespace GestaoInvestimentos.Infra.IoC
         {
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IAtivoService, AtivoService>();
+            services.AddScoped<IPortifolioService, PortifolioService>();
+            services.AddScoped<ITransacaoService, TransacaoService>();
         }
 
         public static void ConfigureAutoMapper(IServiceCollection services)
