@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GestaoInvestimentos.Infra.Data.Configuration
+﻿namespace GestaoInvestimentos.Infra.Data.Configuration
 {
     public class MongoConfiguration
     {
@@ -13,15 +7,5 @@ namespace GestaoInvestimentos.Infra.Data.Configuration
         public int Port { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
-        public string ConnectionString
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(User) || string.IsNullOrEmpty(Password))
-                    return $@"mongodb://localhost:27017";
-
-                return $@"mongodb://{User}:{Password}@{Host}:{Port}";
-            }
-        }
     }
 }

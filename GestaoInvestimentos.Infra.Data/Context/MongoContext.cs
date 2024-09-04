@@ -12,26 +12,35 @@ namespace GestaoInvestimentos.Infra.Data.Context
 
         public MongoContext(IOptions<MongoConfiguration> config)
         {
-            var client = new MongoClient(config.Value.ConnectionString);
+            var settings = MongoClientSettings.FromConnectionString(config.Value.Host);
+         
+            var client = new MongoClient(settings);
             _db = client.GetDatabase(config.Value.Database);
 
-            CriaCollectionSeNaoExistir<Usuario>("Usuarios").Wait();
-            CriaCollectionSeNaoExistir<Ativo>("Ativos").Wait();
-            CriaCollectionSeNaoExistir<Portifolio>("Portifolios").Wait();
-            CriaCollectionSeNaoExistir<Transacao>("Transacoes").Wait();
+            //CriaCollectionSeNaoExistir<Usuario>("Usuarios").Wait();
+            //CriaCollectionSeNaoExistir<Ativo>("Ativos").Wait();
+            //CriaCollectionSeNaoExistir<Portifolio>("Portifolios").Wait();
+            //CriaCollectionSeNaoExistir<Transacao>("Transacoes").Wait();
 
         }
 
         private async Task CriaCollectionSeNaoExistir<T>(string nomeCollection)
         {
-            await Task.Run(() =>
-            {
-                var filter = new BsonDocument("name", nomeCollection);
-                var collections = _db.ListCollections(new ListCollectionsOptions { Filter = filter });
+            //await Task.Run(() =>
+            //{
+                try
+                {
+                    var filter = new BsonDocument("name", nomeCollection);
+                    var collections = _db.ListCollections(new ListCollectionsOptions { Filter = filter });
 
-                if (!collections.Any())
-                    _db.CreateCollection(nomeCollection);
-            });
+                    if (!collections.Any())
+                        _db.CreateCollection(nomeCollection);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            //});
         }
 
         public IMongoCollection<Usuario> Usuarios => _db.GetCollection<Usuario>("Usuarios");
