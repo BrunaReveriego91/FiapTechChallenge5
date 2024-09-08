@@ -86,7 +86,14 @@ namespace GestaoInvestimentos.Infra.Data.Repositories
         {
             try
             {
-                return await _context.Usuarios.Find(e => true).ToListAsync();
+                var projection = Builders<Usuario>.Projection.Exclude(u => u.Senha);
+    
+                var usuarios = await _context.Usuarios
+                    .Find(e => true)
+                    .Project<Usuario>(projection)
+                    .ToListAsync();
+
+                return usuarios;
             }
             catch (MongoException ex)
             {

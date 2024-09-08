@@ -48,9 +48,7 @@ Camadas do sistema:
 }</code></pre>
 
 <h4>Resposta:</h4>
-<pre><code>{
-  "token": "JWT_TOKEN"
-}</code></pre>
+<pre><code>"JWT_TOKEN"</code></pre>
 
 <h2>Usuários</h2>
 <h3>POST /Usuario/cadastrar</h3>
@@ -64,11 +62,7 @@ Camadas do sistema:
 }</code></pre>
 
 <h4>Resposta:</h4>
-<pre><code>{
-  "id": "1",
-  "nome": "João da Silva",
-  "email": "joao@exemplo.com"
-}</code></pre>
+<pre><code>"ID_USER"</code></pre>
 
 <h3>GET /Usuario/listar</h3>
 <p>Lista os usuários do sistema.</p>
@@ -81,7 +75,8 @@ Camadas do sistema:
   {
     "id": "1",
     "nome": "João da Silva",
-    "email": "joao@exemplo.com"
+    "email": "joao@exemplo.com",
+    "role": 0
   }
 ]</code></pre>
 
@@ -105,6 +100,7 @@ Camadas do sistema:
 <h4>Resposta:</h4>
 <pre><code>[
   {
+    "usuarioId": "1",
     "id": "1",
     "nome": "Portfólio A",
     "descricao": "Meu primeiro portfólio"
@@ -121,11 +117,8 @@ Camadas do sistema:
 }</code></pre>
 
 <h4>Resposta:</h4>
-<pre><code>{
-  "id": "2",
-  "nome": "Portfólio B",
-  "descricao": "Portfólio de teste"
-}</code></pre>
+<p>Status code 200 OK.</p>
+
 
 <h3>GET /Portfolio/{id}</h3>
 <p>Obter detalhes de um portfólio específico.</p>
@@ -135,6 +128,7 @@ Camadas do sistema:
 
 <h4>Resposta:</h4>
 <pre><code>{
+  "usuarioId": "1"
   "id": "1",
   "nome": "Portfólio A",
   "descricao": "Meu primeiro portfólio"
@@ -161,7 +155,7 @@ Camadas do sistema:
 <pre><code>[
   {
     "id": "1",
-    "tipoAtivo": "Ações",
+    "tipoAtivo": 1,
     "nome": "Apple",
     "codigo": "AAPL"
   }
@@ -172,18 +166,13 @@ Camadas do sistema:
 
 <h4>Requisição:</h4>
 <pre><code>{
-  "tipoAtivo": "Ações",
+  "tipoAtivo": 1,
   "nome": "Apple",
   "codigo": "AAPL"
 }</code></pre>
 
 <h4>Resposta:</h4>
-<pre><code>{
-  "id": "1",
-  "tipoAtivo": "Ações",
-  "nome": "Apple",
-  "codigo": "AAPL"
-}</code></pre>
+<p>Status code 200 OK.</p>
 
 <h3>GET /Ativo/{id}</h3>
 <p>Obter detalhes de um ativo específico.</p>
@@ -194,7 +183,7 @@ Camadas do sistema:
 <h4>Resposta:</h4>
 <pre><code>{
   "id": "1",
-  "tipoAtivo": "Ações",
+  "tipoAtivo": 1,
   "nome": "Apple",
   "codigo": "AAPL"
 }</code></pre>
@@ -220,7 +209,7 @@ Camadas do sistema:
 <pre><code>[
   {
     "id": "1",
-    "tipoTransacao": "Compra",
+    "tipoTransacao": 0,
     "quantidade": 10,
     "preco": 150,
     "dataTransacao": "2024-09-03T12:00:00Z"
@@ -234,19 +223,13 @@ Camadas do sistema:
 <pre><code>{
   "portfolioId": "1",
   "ativoId": "1",
-  "tipoTransacao": "Compra",
+  "tipoTransacao": 0,
   "quantidade": 5,
   "preco": 300
 }</code></pre>
 
 <h4>Resposta:</h4>
-<pre><code>{
-  "id": "2",
-  "tipoTransacao": "Compra",
-  "quantidade": 5,
-  "preco": 300,
-  "dataTransacao": "2024-09-03T14:00:00Z"
-}</code></pre>
+<p>Status code 200 OK.</p>
 
 <h3>GET /Transacao/{id}</h3>
 <p>Obter detalhes de uma transação específica.</p>
@@ -257,7 +240,7 @@ Camadas do sistema:
 <h4>Resposta:</h4>
 <pre><code>{
   "id": "1",
-  "tipoTransacao": "Compra",
+  "tipoTransacao": 0,
   "quantidade": 10,
   "preco": 150,
   "dataTransacao": "2024-09-03T12:00:00Z"
