@@ -19,8 +19,8 @@ namespace GestaoInvestimentos.Tests.UnitTests
             return new TransacaoService(_transacaoRepository.Object, _ativoService.Object, _portifolioService.Object);
         }
 
-        [Fact]
-        public async Task ListarTransacoes_DeveRetornarSucesso()
+        [Fact(DisplayName = "Listar todas transacoes")]
+        public async Task ListarTransacoes_DeveRetornarListaTransacoes()
         {
             //Arrange
             var transacoesFaker = new TransacaoFaker().Generate(3);
@@ -38,7 +38,7 @@ namespace GestaoInvestimentos.Tests.UnitTests
 
         }
 
-        [Fact]
+        [Fact(DisplayName = "Listar todas transacoes deve lancar exception")]
         public async Task ListarTransacoes_DeveLancarMongoException()
         {
             //Arrange
@@ -55,7 +55,7 @@ namespace GestaoInvestimentos.Tests.UnitTests
             });
         }
 
-        [Fact]
+        [Fact(DisplayName = "Cadastrar transacao deve cadastrar com sucesso")]
         public async Task CadastrarTransacao_DeveCadastrarComSucesso()
         {
             //Arrange
@@ -80,7 +80,7 @@ namespace GestaoInvestimentos.Tests.UnitTests
 
         }
 
-        [Fact]
+        [Fact(DisplayName = "Cadastrar transacao deve lancar exception")]
         public async Task CadastrarTransacao_DeveLancarMongoException()
         {
             //Arrange
@@ -107,9 +107,9 @@ namespace GestaoInvestimentos.Tests.UnitTests
             });
         }
 
-        /*TODO: Alterar Transacao */
 
-        [Fact]
+
+        [Fact(DisplayName = "Remover transacao deve remover com sucesso")]
         public async Task RemoverTransacao_DeveRemoverComSucesso()
         {
             //Arrange
@@ -134,7 +134,7 @@ namespace GestaoInvestimentos.Tests.UnitTests
         }
 
 
-        [Fact]
+        [Fact(DisplayName = "Remover transacao deve lancar exception")]
         public async Task RemoverTransacao_DeveLancarException()
         {
             //Arrange
@@ -153,8 +153,8 @@ namespace GestaoInvestimentos.Tests.UnitTests
 
 
 
-        [Fact]
-        public async Task BuscarTransacaoPorId_DeveRetornarSucesso()
+        [Fact(DisplayName = "Buscar transacao por ID deve buscar com sucesso")]
+        public async Task BuscarTransacaoPorId_DeveRetornarTransacaoComSucesso()
         {
             //Arrange
             var transacoesFaker = new TransacaoFaker().Generate();

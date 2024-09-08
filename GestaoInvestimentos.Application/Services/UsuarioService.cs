@@ -31,7 +31,7 @@ namespace GestaoInvestimentos.Application.Services
             return await _usuarioRepository.BuscarUsuarioPorId(id);
         }
 
-        public async Task CadastrarUsuario(UsuarioRequest usuario)
+        public async Task<Guid> CadastrarUsuario(UsuarioRequest usuario)
         {
             var usuarioExistente = await _usuarioRepository.BuscarUsuarioPorEmail(usuario.Email);
 
@@ -48,6 +48,8 @@ namespace GestaoInvestimentos.Application.Services
             };
 
             await _usuarioRepository.CadastrarUsuario(usuarioHash);
+
+            return usuarioHash.Id;
         }
 
         public async Task<IEnumerable<Usuario>> ListarUsuario()

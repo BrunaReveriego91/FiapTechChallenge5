@@ -40,8 +40,8 @@ namespace GestaoInvestimentos.API.Controllers
         {
             try
             {
-                await _usuarioService.CadastrarUsuario(usuario);
-                return Ok();
+                var usuarioId = await _usuarioService.CadastrarUsuario(usuario);
+                return Ok(usuarioId);
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace GestaoInvestimentos.API.Controllers
 
         [HttpDelete]
         [Authorize(Roles = "Admin")]
-        [Route("remover/{Id}")]
+        [Route("{id:Guid}")]
         public async Task<IActionResult> RemoverUsuarioPorId(Guid id)
         {
             try

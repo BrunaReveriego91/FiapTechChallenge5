@@ -96,7 +96,7 @@ namespace GestaoInvestimentos.Tests.IntegrationTests
 
             if (!string.IsNullOrEmpty(id))
             {
-                var response = await _httpClient.DeleteAsync($"/Usuario/remover/{id}");
+                var response = await _httpClient.DeleteAsync($"/Usuario/{id}");
                 if (!response.IsSuccessStatusCode)
                 {
                     var deleteError = await response.Content.ReadAsStringAsync();

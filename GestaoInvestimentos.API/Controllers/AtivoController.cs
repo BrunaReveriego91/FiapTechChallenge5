@@ -24,7 +24,6 @@ namespace GestaoInvestimentos.API.Controllers
         {
             try
             {
-                /*teste */
                 await _ativoService.CadastrarAtivo(ativo);
                 return Ok();
             }

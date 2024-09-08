@@ -18,8 +18,8 @@ namespace GestaoInvestimentos.Tests.UnitTests
             return new UsuarioService(_repositoryMock.Object, _jwtMock.Object);
         }
 
-        [Fact]
-        public async Task AutenticarUsuario_DeveRetornarSucesso()
+        [Fact(DisplayName = "Autenticar usuario deve autenticar com sucesso")]
+        public async Task AutenticarUsuario_DeveAutenticarComSucesso()
         {
             //Arrange
             var service = CriarService();
@@ -38,7 +38,7 @@ namespace GestaoInvestimentos.Tests.UnitTests
 
         }
 
-        [Fact]
+        [Fact(DisplayName = "Autenticar usuario deve lancar exception")]
         public async Task AutenticarUsuario_DeveLancarException()
         {
             //Arrange
@@ -57,8 +57,8 @@ namespace GestaoInvestimentos.Tests.UnitTests
         }
 
 
-        [Fact]
-        public async Task CadastrarUsuario_DeveRetornarSucesso()
+        [Fact(DisplayName = "Cadastrar usuario deve cadastrar com sucesso")]
+        public async Task CadastrarUsuario_DeveCadastrarComSucesso()
         {
             //Arrange
             var service = CriarService();

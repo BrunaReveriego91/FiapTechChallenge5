@@ -6,7 +6,7 @@ namespace GestaoInvestimentos.Application.Interfaces
     public interface IUsuarioService
     {
         Task<string> AutenticarUsuario(string email, string senha);
-        Task CadastrarUsuario(UsuarioRequest usuario);
+        Task<Guid> CadastrarUsuario(UsuarioRequest usuario);
         Task<Usuario> BuscarUsuario(Guid id);
         Task<IEnumerable<Usuario>> ListarUsuario();
         Task RemoverUsuarioPorId(Guid id);
