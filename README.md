@@ -112,6 +112,7 @@ Camadas do sistema:
 
 <h4>Requisição:</h4>
 <pre><code>{
+  "usuarioId": "1",
   "nome": "Portfólio B",
   "descricao": "Portfólio de teste"
 }</code></pre>
